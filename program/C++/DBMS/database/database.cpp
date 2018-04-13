@@ -6,15 +6,15 @@
 #include<fstream>
 #include<ctime>
 using namespace std;
-int space=0;//¼ÇÂ¼ÊäÈëµÄSQLÓïÑÔµÄ×îºóÒ»¸ö¿Õ¸ñ
-char name[10];//±íÃû
-int column=0;//ÁĞÊı
-struct Node//Ò»¸ö½á¹¹Ìå¶ÔÏó´æ´¢Ò»Ìõ¼ÇÂ¼
+int space=0;//è®°å½•è¾“å…¥çš„SQLè¯­è¨€çš„æœ€åä¸€ä¸ªç©ºæ ¼
+char name[10];//è¡¨å
+int column=0;//åˆ—æ•°
+struct Node//ä¸€ä¸ªç»“æ„ä½“å¯¹è±¡å­˜å‚¨ä¸€æ¡è®°å½•
 	{
 		char **data;
 		struct Node* next;
 	};
-void Save(char *filename,Node *p,int column,char **attribute)//±£´æµ½ÎÄ±¾ÎÄµµ
+void Save(char *filename,Node *p,int column,char **attribute)//ä¿å­˜åˆ°æ–‡æœ¬æ–‡æ¡£
 {
 	int i=0;
 	ofstream outfile(filename);
@@ -38,18 +38,18 @@ void Save(char *filename,Node *p,int column,char **attribute)//±£´æµ½ÎÄ±¾ÎÄµµ
 	for(i=0;i<16*(column+1);i++)
 	{outfile<<'-';}
     outfile.close();
-    cout<<"±í±£´æÔÚ"<<filename<<"ÖĞ"<<endl;
+    cout<<"è¡¨ä¿å­˜åœ¨"<<filename<<"ä¸­"<<endl;
 }
-bool findwhere(char *input)//Ê¶±ğÊÇ·ñÓĞWHERE
+bool findwhere(char *input)//è¯†åˆ«æ˜¯å¦æœ‰WHERE
 {
 	char func[7];
 	int i=0,j=0,record=0;
 	for(i=0;input[i]!=';';i++)
 	{}
-    record=i;//·ÖºÅÎ»ÖÃ
+    record=i;//åˆ†å·ä½ç½®
 	for(i=record;input[i]!=' ';i--)
 	{}
-	record=i;//¿Õ¸ñÎ»ÖÃ
+	record=i;//ç©ºæ ¼ä½ç½®
 	space=i;
 	for(j=0;j<5;j++)
 	{func[j]=input[record-5];
@@ -60,14 +60,14 @@ bool findwhere(char *input)//Ê¶±ğÊÇ·ñÓĞWHERE
 	{return 1;}
 	return 0;
 }
-int selfunc(char *input,bool flag)//Ê¶±ğ¹¦ÄÜ
+int selfunc(char *input,bool flag)//è¯†åˆ«åŠŸèƒ½
 {
 	int i=0;
-    char function[7];//¹¦ÄÜÃû
-    int record;//¼ÇÂ¼×Ö·ûÎ»ÖÃ
+    char function[7];//åŠŸèƒ½å
+    int record;//è®°å½•å­—ç¬¦ä½ç½®
     for(i=0;input[i]!=' ';i++)
 	{function[i]=input[i];}
-	record=i;//¿Õ¸ñÎ»ÖÃ
+	record=i;//ç©ºæ ¼ä½ç½®
 	function[i]='\0';
 	if(strcmp(function,"CREATE")==0)
 	{for(i=record+1;input[i]!=' ';i++)
@@ -77,42 +77,42 @@ int selfunc(char *input,bool flag)//Ê¶±ğ¹¦ÄÜ
 	{return 1;}
 	if(strcmp(function,"INDEX")==0)
 	{if(flag==0)
-	{cout<<"»¹Î´½¨±í!"<<endl;
+	{cout<<"è¿˜æœªå»ºè¡¨!"<<endl;
 	return -1;}
 	return 6;
 	}
 	else
-	{cout<<"ÊäÈë´íÎó!"<<endl;
+	{cout<<"è¾“å…¥é”™è¯¯!"<<endl;
 	return -1;
 	}
 	}
     else if(strcmp(function,"SELECT")==0)
 	{if(flag==0)
-	{cout<<"»¹Î´½¨±í!"<<endl;
+	{cout<<"è¿˜æœªå»ºè¡¨!"<<endl;
 	return -1;}
 	return 2;
 	}
 	else if(strcmp(function,"INSERT")==0)
 	{if(flag==0)
-	{cout<<"»¹Î´½¨±í!"<<endl;
+	{cout<<"è¿˜æœªå»ºè¡¨!"<<endl;
 	return -1;}
 	return 3;}
 	else if(strcmp(function,"DELETE")==0)
 	{if(flag==0)
-	{cout<<"»¹Î´½¨±í!"<<endl;
+	{cout<<"è¿˜æœªå»ºè¡¨!"<<endl;
 	return -1;}
 	return 4;}
 	else if(strcmp(function,"UPDATE")==0)
 	{if(flag==0)
-	{cout<<"»¹Î´½¨±í!"<<endl;
+	{cout<<"è¿˜æœªå»ºè¡¨!"<<endl;
 	return -1;}
 	return 5;}
 	else
-	{cout<<"ÊäÈë´íÎó!"<<endl;
+	{cout<<"è¾“å…¥é”™è¯¯!"<<endl;
 	return -1;
 	}
 }
-void showall(Node *p,int column)//ÏÔÊ¾ËùÓĞÊı¾İ
+void showall(Node *p,int column)//æ˜¾ç¤ºæ‰€æœ‰æ•°æ®
 {
 	int i=0;
     while(p->next)
@@ -124,14 +124,14 @@ void showall(Node *p,int column)//ÏÔÊ¾ËùÓĞÊı¾İ
     p=p->next;
 	}
 }
-void drawtable(int column)//»­±í¸ñÏß
+void drawtable(int column)//ç”»è¡¨æ ¼çº¿
 {
 	int i=0;
     for(i=0;i<16*(column+1);i++)
 	{cout<<'-';}
     cout<<endl;
 }
-void showone(Node *p,int Record)//ÎŞÌõ¼ş²éÑ¯ÏÔÊ¾Ò»ÁĞ
+void showone(Node *p,int Record)//æ— æ¡ä»¶æŸ¥è¯¢æ˜¾ç¤ºä¸€åˆ—
 {
 	while(p->next)
 	{cout<<setfill(' ')<<setw(15)<<p->next->data[Record];
@@ -139,7 +139,7 @@ void showone(Node *p,int Record)//ÎŞÌõ¼ş²éÑ¯ÏÔÊ¾Ò»ÁĞ
     p=p->next;
 	}
 }
-void showone_many(Node *p,int *selnum,int num)//ÎŞÌõ¼ş¶àÁĞ²éÑ¯
+void showone_many(Node *p,int *selnum,int num)//æ— æ¡ä»¶å¤šåˆ—æŸ¥è¯¢
 {
 	int l=0;
 	while(p->next)
@@ -150,7 +150,7 @@ void showone_many(Node *p,int *selnum,int num)//ÎŞÌõ¼ş¶àÁĞ²éÑ¯
     p=p->next;
 	}
 }
-void insertone(Node *p,int Record,char *findvalue)//²åÈëÒ»¸öÁĞÖµ
+void insertone(Node *p,int Record,char *findvalue)//æ’å…¥ä¸€ä¸ªåˆ—å€¼
 {
 	Node *s;
 	int i;
@@ -159,15 +159,15 @@ void insertone(Node *p,int Record,char *findvalue)//²åÈëÒ»¸öÁĞÖµ
     s=(Node*)malloc(sizeof(Node));
 	s->data=new char*[column+1];
 	for(i=0;i<column+1;i++)
-	{s->data[i]=new char[20];}//Ò»¸öĞĞ¼ÇÂ¼¶ÔÓ¦Ò»¸ö×Ö·ûÊı×é
+	{s->data[i]=new char[20];}//ä¸€ä¸ªè¡Œè®°å½•å¯¹åº”ä¸€ä¸ªå­—ç¬¦æ•°ç»„
 	for(i=0;i<column+1;i++)
 	{s->data[i][0]='\0';}
 	strcpy(s->data[Record],findvalue);
 	p->next=s;
 	s->next=NULL;
-	cout<<"Íê³ÉĞŞ¸Ä!"<<endl;
+	cout<<"å®Œæˆä¿®æ”¹!"<<endl;
 }
-void insertall(Node *p,int *innum,char **invalue,int num)//²åÈë¶à¸öÁĞÖµ
+void insertall(Node *p,int *innum,char **invalue,int num)//æ’å…¥å¤šä¸ªåˆ—å€¼
 {
 	Node *s;
 	int i;
@@ -176,16 +176,16 @@ void insertall(Node *p,int *innum,char **invalue,int num)//²åÈë¶à¸öÁĞÖµ
     s=(Node*)malloc(sizeof(Node));
 	s->data=new char*[column+1];
 	for(i=0;i<column+1;i++)
-	{s->data[i]=new char[20];}//Ò»¸öĞĞ¼ÇÂ¼¶ÔÓ¦Ò»¸ö×Ö·ûÊı×é
+	{s->data[i]=new char[20];}//ä¸€ä¸ªè¡Œè®°å½•å¯¹åº”ä¸€ä¸ªå­—ç¬¦æ•°ç»„
 	for(i=0;i<column+1;i++)
 	{s->data[i][0]='\0';}
 	for(i=0;i<num+1;i++)
 	{strcpy(s->data[innum[i]],invalue[i]);}
 	p->next=s;
 	s->next=NULL;
-	cout<<"Íê³ÉĞŞ¸Ä!"<<endl;
+	cout<<"å®Œæˆä¿®æ”¹!"<<endl;
 }
-void showone_where(Node *p,int Record,char *findvalue,int Record2)//Ìõ¼ş²éÑ¯ÏÔÊ¾Ò»ÁĞ
+void showone_where(Node *p,int Record,char *findvalue,int Record2)//æ¡ä»¶æŸ¥è¯¢æ˜¾ç¤ºä¸€åˆ—
 {
 	while(p->next)
 	{if(strcmp(findvalue,p->next->data[Record2])==0)
@@ -195,7 +195,7 @@ void showone_where(Node *p,int Record,char *findvalue,int Record2)//Ìõ¼ş²éÑ¯ÏÔÊ¾
     p=p->next;
 	}
 }
-void showone_wheremany(Node *p,int *selnum,char *findvalue,int Record2,int num)//Ìõ¼ş²éÑ¯¶àÁĞ²éÑ¯
+void showone_wheremany(Node *p,int *selnum,char *findvalue,int Record2,int num)//æ¡ä»¶æŸ¥è¯¢å¤šåˆ—æŸ¥è¯¢
 {
 	int l=0;
     while(p->next)
@@ -209,7 +209,7 @@ void showone_wheremany(Node *p,int *selnum,char *findvalue,int Record2,int num)/
     p=p->next;
 	}
 }
-void Delete(Node *p,int Record,char *findvalue)//É¾³ı
+void Delete(Node *p,int Record,char *findvalue)//åˆ é™¤
 { 
 	Node *s;
 	while(p->next)
@@ -220,7 +220,7 @@ void Delete(Node *p,int Record,char *findvalue)//É¾³ı
 	p=p->next;
 	}
 }
-void Update(Node *p,int Record,char *findvalue)//ĞŞ¸Ä
+void Update(Node *p,int Record,char *findvalue)//ä¿®æ”¹
 	   {
 		   while(p->next)
 		   {
@@ -228,59 +228,57 @@ void Update(Node *p,int Record,char *findvalue)//ĞŞ¸Ä
 		   p=p->next;
 		   }
 	   }
-void seltime(double start,double finish)//¼ÆËã²éÑ¯Ê±¼ä
+void seltime(double start,double finish)//è®¡ç®—æŸ¥è¯¢æ—¶é—´
 {
-	double time;//²éÑ¯Ê±¼ä
+	double time;//æŸ¥è¯¢æ—¶é—´
 	time=(double)(finish-start)/(double)CLK_TCK;
-	cout<<"±¾´Î²éÑ¯ÓÃÊ±"<<time<<"Ãë"<<endl;
+	cout<<"æœ¬æ¬¡æŸ¥è¯¢ç”¨æ—¶"<<time<<"ç§’"<<endl;
 }
 int main()
 {
-	char input[100];//ÊäÈë
-	char Attribute[20];//ÓÃÓÚ²éÕÒÁĞÃû
-    char **attribute;//ÁĞÃû
+	char input[100];//è¾“å…¥
+	char Attribute[20];//ç”¨äºæŸ¥æ‰¾åˆ—å
+    char **attribute;//åˆ—å
 	int i=0,j=0,k=0,l=0;
-	int record=0;//¼ÇÂ¼×Ö·ûÎ»ÖÃ
-	int Record=-1;//¼ÇÂ¼ÁĞĞòºÅ
-	int num=0;//¶ººÅ¸öÊı
-	bool flag=0;//±ê¼ÇÊÇ·ñ½¨±í
-	int *selnum;//²éÑ¯µÄÁĞÊı
-	char end=0;//ÊäÈë½áÊø±ê¼Ç
-	Node *p,*s;//Á´±íÍ·½Úµã
-	char Name[10];//Ê¶±ğ±íÃû
-	char findattri[20];//¼ÇÂ¼²éÑ¯µÄÌõ¼şÊôĞÔ
-	char findvalue[20];//¼ÇÂ¼²éÑ¯µÄÌõ¼şÊôĞÔµÄÖµ
-	int Record2=-1;//¼ÇÂ¼Ìõ¼şÁĞµÄĞòºÅ
-	clock_t start,finish;//¼ÆËã²éÑ¯Ê±¼ä
-	char End=0;//Õû¸ö³ÌĞò½áÊø±ê¼Ç
-	int *innum;//¼ÇÂ¼²åÈëµÄÁĞÊı
+	int record=0;//è®°å½•å­—ç¬¦ä½ç½®
+	int Record=-1;//è®°å½•åˆ—åºå·
+	int num=0;//é€—å·ä¸ªæ•°
+	bool flag=0;//æ ‡è®°æ˜¯å¦å»ºè¡¨
+	int *selnum;//æŸ¥è¯¢çš„åˆ—æ•°
+	char end=0;//è¾“å…¥ç»“æŸæ ‡è®°
+	Node *p,*s;//é“¾è¡¨å¤´èŠ‚ç‚¹
+	char Name[10];//è¯†åˆ«è¡¨å
+	char findattri[20];//è®°å½•æŸ¥è¯¢çš„æ¡ä»¶å±æ€§
+	char findvalue[20];//è®°å½•æŸ¥è¯¢çš„æ¡ä»¶å±æ€§çš„å€¼
+	int Record2=-1;//è®°å½•æ¡ä»¶åˆ—çš„åºå·
+	clock_t start,finish;//è®¡ç®—æŸ¥è¯¢æ—¶é—´
+	char End=0;//æ•´ä¸ªç¨‹åºç»“æŸæ ‡è®°
+	int *innum;//è®°å½•æ’å…¥çš„åˆ—æ•°
 	char **invalue;
-	cout<<"»¶Ó­Ê¹ÓÃ!"<<endl<<endl;
-	cout<<"ÖÆ×÷ÈË:"<<endl;
-	cout<<"ËïÍ¯¿­,¼ÖÁá,Íõ¾²,ÖÜ¼Òè¡"<<endl<<endl;
-	cout<<"ÇëÊäÈëSQLÓïÑÔ:"<<endl;
+	cout<<"æ¬¢è¿ä½¿ç”¨!"<<endl<<endl;
+	cout<<"è¯·è¾“å…¥SQLè¯­è¨€:"<<endl;
     while(true)
-	{cin.getline(input,250,'\n');//ÊäÈëSQLÓïÑÔ
-	if(selfunc(input,flag)==-1)//Òì³£
+	{cin.getline(input,250,'\n');//è¾“å…¥SQLè¯­è¨€
+	if(selfunc(input,flag)==-1)//å¼‚å¸¸
 	{return 0;}
-	if(selfunc(input,flag)==1)//Ñ¡Ôñ½¨±í¹¦ÄÜ
+	if(selfunc(input,flag)==1)//é€‰æ‹©å»ºè¡¨åŠŸèƒ½
 	{
-		cout<<"Ñ¡Ôñ½¨±í¹¦ÄÜ"<<endl;
-		for(i=13;input[i]!='(';i++)//Ê¶±ğ±íÃû
+		cout<<"é€‰æ‹©å»ºè¡¨åŠŸèƒ½"<<endl;
+		for(i=13;input[i]!='(';i++)//è¯†åˆ«è¡¨å
 	{name[i-13]=input[i];}
 	name[i-13]='\0';
-	record=i;//×óÀ¨ºÅÎ»ÖÃ
+	record=i;//å·¦æ‹¬å·ä½ç½®
 	if(strcmp(name,"")==0)
-	{cout<<"Î´ÊäÈë±íÃû!"<<endl;
+	{cout<<"æœªè¾“å…¥è¡¨å!"<<endl;
 	return 0;
 	}
 	else
-	{cout<<"±íÃûÎª:"<<name<<endl;}
+	{cout<<"è¡¨åä¸º:"<<name<<endl;}
 		for(i=0;input[i]!='(';i++)
 	{}
-    record=i;//×óÀ¨ºÅÎ»ÖÃ
+    record=i;//å·¦æ‹¬å·ä½ç½®
 	num=0;
-	for(i=record+1;input[i]!=')';i++)//Êı¶ººÅ¸öÊı=ÁĞÊı-1
+	for(i=record+1;input[i]!=')';i++)//æ•°é€—å·ä¸ªæ•°=åˆ—æ•°-1
 	{if(input[i]==',')
 	{num++;}
 	}
@@ -288,7 +286,7 @@ int main()
 	attribute=new char*[column+1];
 	for(i=0;i<column+1;i++)
 	{attribute[i]=new char[20];}
-	if(num==0)//Ö»ÓĞÒ»¸öÁĞ
+	if(num==0)//åªæœ‰ä¸€ä¸ªåˆ—
 	{j=0;
 	l=0;
 	for(i=record+1;input[i]!=' ';i++)
@@ -298,7 +296,7 @@ int main()
 	attribute[j][l]='\0';
 	}
 	else
-	{while(num>0)//ÓĞ¶à¸öÁĞ
+	{while(num>0)//æœ‰å¤šä¸ªåˆ—
 	{l=0;
 	for(i=record+1;input[i]!=' ';i++)
 	{attribute[j][l]=input[i];
@@ -310,30 +308,30 @@ int main()
 	for(i;input[i]!=',';i++)
 	{}
 	num--;
-	record=i;//¶ººÅÎ»ÖÃ
+	record=i;//é€—å·ä½ç½®
 	}
-	for(i=record+1;input[i]!=' ';i++)//×îºóÒ»¸öÁĞ
+	for(i=record+1;input[i]!=' ';i++)//æœ€åä¸€ä¸ªåˆ—
 	{attribute[j][l]=input[i];
 	l++;
 	}
 	attribute[j][l]='\0';
 	}
-	cout<<"±íµÄ¸÷¸öÁĞÎª:"<<endl;
+	cout<<"è¡¨çš„å„ä¸ªåˆ—ä¸º:"<<endl;
 	drawtable(column);
 	for(i=0;i<column+1;i++)
 	{cout<<setfill(' ')<<setw(15)<<attribute[i]<<'|';}
 	cout<<endl;
 	drawtable(column);
 	cout<<endl;
-	flag=1;//ÒÑÍê³É½¨±í
+	flag=1;//å·²å®Œæˆå»ºè¡¨
 	}
-	if(selfunc(input,flag)==6)//Ñ¡Ôñ½¨Á¢Ë÷Òı¹¦ÄÜ
-	{cout<<"Çë°´ĞĞÊäÈëÊı¾İ:"<<endl;
+	if(selfunc(input,flag)==6)//é€‰æ‹©å»ºç«‹ç´¢å¼•åŠŸèƒ½
+	{cout<<"è¯·æŒ‰è¡Œè¾“å…¥æ•°æ®:"<<endl;
 	for(i=16;input[i]!=';';i++)
 	    {Name[i-16]=input[i];}
 	    Name[i-16]='\0';
 	    if(strcmp(Name,name)!=0)
-	    {cout<<"±íÃû²»ÕıÈ·!"<<endl;
+	    {cout<<"è¡¨åä¸æ­£ç¡®!"<<endl;
 	    return 0;
 	    }
 	p=(Node*)malloc(sizeof(Node));
@@ -342,16 +340,16 @@ int main()
 	{s=(Node*)malloc(sizeof(Node));
 	s->data=new char*[column+1];
 	for(i=0;i<column+1;i++)
-	{s->data[i]=new char[20];}//Ò»¸öĞĞ¼ÇÂ¼¶ÔÓ¦Ò»¸ö×Ö·ûÊı×é
-	for(i=0;i<column+1;i++)//ÊäÈë¸÷ÁĞÊı¾İ
+	{s->data[i]=new char[20];}//ä¸€ä¸ªè¡Œè®°å½•å¯¹åº”ä¸€ä¸ªå­—ç¬¦æ•°ç»„
+	for(i=0;i<column+1;i++)//è¾“å…¥å„åˆ—æ•°æ®
 	{cin.getline(s->data[i],20,'\n');}
-	cout<<"ÇëÊäÈëÏÂÒ»ĞĞÊı¾İ,»ò°´»Ø³µ¼ü½áÊøÊäÈë:"<<endl;
+	cout<<"è¯·è¾“å…¥ä¸‹ä¸€è¡Œæ•°æ®,æˆ–æŒ‰å›è½¦é”®ç»“æŸè¾“å…¥:"<<endl;
 	s->next=p->next;
 	p->next=s;
-	end=getch();//»Ø³µ¼ü½áÊøÊäÈë
+	end=getch();//å›è½¦é”®ç»“æŸè¾“å…¥
 	}
-	cout<<"ÒÑÍê³É½¨±í"<<endl;
-	cout<<"¸÷ÁĞÊı¾İÈçÏÂ:"<<endl;
+	cout<<"å·²å®Œæˆå»ºè¡¨"<<endl;
+	cout<<"å„åˆ—æ•°æ®å¦‚ä¸‹:"<<endl;
 	drawtable(column);
 	for(i=0;i<column+1;i++)
 	{cout<<setfill(' ')<<setw(15)<<attribute[i];
@@ -359,51 +357,51 @@ int main()
 	}
 	cout<<endl;
 	drawtable(column);
-	showall(p,column);//ÏÔÊ¾¸÷ÁĞÊı¾İ
+	showall(p,column);//æ˜¾ç¤ºå„åˆ—æ•°æ®
 	drawtable(column);
 	Save("TextFile.txt",p,column,attribute);
 	cout<<endl;
 	}
-	if(selfunc(input,flag)==2)//Ñ¡Ôñ²éÑ¯¹¦ÄÜ
+	if(selfunc(input,flag)==2)//é€‰æ‹©æŸ¥è¯¢åŠŸèƒ½
 	{
-		cout<<"Ñ¡Ôñ²éÑ¯¹¦ÄÜ"<<endl;
+		cout<<"é€‰æ‹©æŸ¥è¯¢åŠŸèƒ½"<<endl;
 		start=clock();
 		for(i=0;input[i]!=' ';i++)
 		{}
-	record=i;//¿Õ¸ñÎ»ÖÃ
-		if(findwhere(input)==0)//ÅĞ¶Ï±íÃûÊÇ·ñÕıÈ·//Ã»ÓĞWHERE
+	record=i;//ç©ºæ ¼ä½ç½®
+		if(findwhere(input)==0)//åˆ¤æ–­è¡¨åæ˜¯å¦æ­£ç¡®//æ²¡æœ‰WHERE
 	{for(i=space+1;input[i]!=';';i++)
 	{Name[i-space-1]=input[i];}
 	Name[i-space-1]='\0';
 	if(strcmp(Name,name)!=0)
-	{cout<<"±íÃû²»ÕıÈ·!"<<endl;
+	{cout<<"è¡¨åä¸æ­£ç¡®!"<<endl;
 	return 0;
 	}
 	}
-	else//ÓĞWHERE
+	else//æœ‰WHERE
 	{for(i=space-1;input[i]!=' ';i--)
 	{}
-	j=i;//±íÃûºóµÄ¿Õ¸ñ
+	j=i;//è¡¨ååçš„ç©ºæ ¼
 	for(i=j-1;input[i]!=' ';i--)
 	{}
-	j=i;//FROMºóµÄ¿Õ¸ñ
+	j=i;//FROMåçš„ç©ºæ ¼
 	for(i=j+1;input[i]!=' ';i++)
 	{Name[i-j-1]=input[i];}
 	Name[i-j-1]='\0';
 	if(strcmp(Name,name)!=0)
-	{cout<<"±íÃû²»ÕıÈ·!"<<endl;
+	{cout<<"è¡¨åä¸æ­£ç¡®!"<<endl;
 	return 0;
 	}
 	}
 	num=0;
-	for(i=record+1;input[i]!='\0';i++)//Òª²éÑ¯µÄÁĞÊı-1
+	for(i=record+1;input[i]!='\0';i++)//è¦æŸ¥è¯¢çš„åˆ—æ•°-1
 	{if(input[i]==',')
 	{num++;}
 	}
 	k=num;
 	Record=-1;
-	if(findwhere(input)==0)//Ã»ÓĞWHERE
-	{if(k==0)//Ö»²éÑ¯Ò»¸öÁĞ
+	if(findwhere(input)==0)//æ²¡æœ‰WHERE
+	{if(k==0)//åªæŸ¥è¯¢ä¸€ä¸ªåˆ—
 	{for(i=record+1;input[i]!=' ';i++)
 	{Attribute[i-record-1]=input[i];}
 	Attribute[i-record-1]='\0';
@@ -412,17 +410,17 @@ int main()
 	{Record=j;}
 	}
 	if(Record==-1)
-	{cout<<"²éÑ¯µÄÁĞ²»´æÔÚ!"<<endl;
+	{cout<<"æŸ¥è¯¢çš„åˆ—ä¸å­˜åœ¨!"<<endl;
 	return 0;}
 	drawtable(num);
 	cout<<setfill(' ')<<setw(15)<<Attribute<<'|'<<endl;
 	drawtable(num);
-	showone(p,Record);//Êä³ö²éÑ¯½á¹û
+	showone(p,Record);//è¾“å‡ºæŸ¥è¯¢ç»“æœ
 	drawtable(num);
 	finish=clock();
 	seltime(start,finish);
 	}
-	else//²éÑ¯¶à¸öÁĞ
+	else//æŸ¥è¯¢å¤šä¸ªåˆ—
 	{drawtable(num);
 	selnum=new int[num+1];
 	l=0;
@@ -430,13 +428,13 @@ int main()
 	{for(i=record+1;input[i]!=',';i++)
 	{Attribute[i-record-1]=input[i];}
 	Attribute[i-record-1]='\0';
-	record=i;//¶ººÅµÄÎ»ÖÃ
+	record=i;//é€—å·çš„ä½ç½®
 	for(j=0;j<column+1;j++)
 	{if(strcmp(Attribute,attribute[j])==0)
 	{Record=j;}
 	}
 	if(Record==-1)
-	{cout<<"²éÑ¯µÄÁĞ²»´æÔÚ!"<<endl;
+	{cout<<"æŸ¥è¯¢çš„åˆ—ä¸å­˜åœ¨!"<<endl;
 	return 0;
 	}
 	cout<<setfill(' ')<<setw(15)<<Attribute<<'|';
@@ -445,7 +443,7 @@ int main()
 	k--;
 	Record=-1;
 	}
-	for(i=record+1;input[i]!=' ';i++)//Ê¶±ğÓï¾äÖĞ×îºóÒ»ÁĞ
+	for(i=record+1;input[i]!=' ';i++)//è¯†åˆ«è¯­å¥ä¸­æœ€åä¸€åˆ—
 	{Attribute[i-record-1]=input[i];}
 	Attribute[i-record-1]='\0';
 	for(j=0;j<column+1;j++)
@@ -453,29 +451,29 @@ int main()
 	{Record=j;}
 	}
 	if(Record==-1)
-	{cout<<"²éÑ¯µÄÁĞ²»´æÔÚ!"<<endl;
+	{cout<<"æŸ¥è¯¢çš„åˆ—ä¸å­˜åœ¨!"<<endl;
 	return 0;}
 	cout<<setfill(' ')<<setw(15)<<Attribute<<'|'<<endl;
 	selnum[l]=Record;
 	drawtable(num);
-	showone_many(p,selnum,num);//Êä³ö²éÑ¯½á¹û
+	showone_many(p,selnum,num);//è¾“å‡ºæŸ¥è¯¢ç»“æœ
 	drawtable(num);
 	finish=clock();
 	seltime(start,finish);
 	}
 	}
 	Record=-1;
-	if(findwhere(input)==1)//ÓĞWHERE
-	{if(k==0)//Ö»²éÑ¯Ò»¸öÁĞ
+	if(findwhere(input)==1)//æœ‰WHERE
+	{if(k==0)//åªæŸ¥è¯¢ä¸€ä¸ªåˆ—
 	{for(i=record+1;input[i]!=' ';i++)
 	{Attribute[i-record-1]=input[i];}
 	Attribute[i-record-1]='\0';
 	for(i=0;input[i]!=';';i++)
 	{}
-	j=i;//·ÖºÅÎ»ÖÃ
+	j=i;//åˆ†å·ä½ç½®
 	for(i=j;input[i]!='=';i--)
 	{}
-	j=i;//µÈÓÚºÅÎ»ÖÃ
+	j=i;//ç­‰äºå·ä½ç½®
 	for(i=j+1;input[i]!=';';i++)
 	{findvalue[i-j-1]=input[i];}
 	findvalue[i-j-1]='\0';
@@ -491,7 +489,7 @@ int main()
 	{Record2=j;}
 	}
 	if(Record==-1||Record2==-1)
-	{cout<<"²éÑ¯µÄÁĞ²»´æÔÚ!"<<endl;
+	{cout<<"æŸ¥è¯¢çš„åˆ—ä¸å­˜åœ¨!"<<endl;
 	return 0;}
 	drawtable(num);
 	cout<<setfill(' ')<<setw(15)<<Attribute<<'|'<<endl;
@@ -501,7 +499,7 @@ int main()
 	finish=clock();
 	seltime(start,finish);
 	}
-	else//²éÑ¯¶à¸öÁĞ
+	else//æŸ¥è¯¢å¤šä¸ªåˆ—
 	{drawtable(num);
 	selnum=new int[num+1];
 	l=0;
@@ -509,13 +507,13 @@ int main()
 	{for(i=record+1;input[i]!=',';i++)
 	{Attribute[i-record-1]=input[i];}
 	Attribute[i-record-1]='\0';
-	record=i;//¶ººÅµÄÎ»ÖÃ
+	record=i;//é€—å·çš„ä½ç½®
 	for(j=0;j<column+1;j++)
 	{if(strcmp(Attribute,attribute[j])==0)
 	{Record=j;}
 	}
 	if(Record==-1)
-	{cout<<"²éÑ¯µÄÁĞ²»´æÔÚ!"<<endl;
+	{cout<<"æŸ¥è¯¢çš„åˆ—ä¸å­˜åœ¨!"<<endl;
 	return 0;
 	}
 	cout<<setfill(' ')<<setw(15)<<Attribute<<'|';
@@ -524,7 +522,7 @@ int main()
 	k--;
 	Record=-1;
 	}
-	for(i=record+1;input[i]!=' ';i++)//Ê¶±ğÓï¾äÖĞ×îºóÒ»ÁĞ
+	for(i=record+1;input[i]!=' ';i++)//è¯†åˆ«è¯­å¥ä¸­æœ€åä¸€åˆ—
 	{Attribute[i-record-1]=input[i];}
 	Attribute[i-record-1]='\0';
 	for(j=0;j<column+1;j++)
@@ -532,16 +530,16 @@ int main()
 	{Record=j;}
 	}
 	if(Record==-1)
-	{cout<<"²éÑ¯µÄÁĞ²»´æÔÚ!"<<endl;
+	{cout<<"æŸ¥è¯¢çš„åˆ—ä¸å­˜åœ¨!"<<endl;
 	return 0;}
 	cout<<setfill(' ')<<setw(15)<<Attribute<<'|'<<endl;
 	selnum[l]=Record;
 	for(i=0;input[i]!=';';i++)
 	{}
-	j=i;//·ÖºÅÎ»ÖÃ
+	j=i;//åˆ†å·ä½ç½®
 	for(i=j;input[i]!='=';i--)
 	{}
-	j=i;//µÈÓÚºÅÎ»ÖÃ
+	j=i;//ç­‰äºå·ä½ç½®
 	for(i=j+1;input[i]!=';';i++)
 	{findvalue[i-j-1]=input[i];}
 	findvalue[i-j-1]='\0';
@@ -553,7 +551,7 @@ int main()
 	{Record2=j;}
 	}
 	if(Record2==-1)
-	{cout<<"²éÑ¯µÄÁĞ²»´æÔÚ!"<<endl;
+	{cout<<"æŸ¥è¯¢çš„åˆ—ä¸å­˜åœ¨!"<<endl;
 	return 0;}
 	drawtable(num);
 	showone_wheremany(p,selnum,findvalue,Record2,num);
@@ -563,34 +561,34 @@ int main()
 	}
 	}
 	}
-	if(selfunc(input,flag)==3)//Ñ¡Ôñ²åÈë¹¦ÄÜ
+	if(selfunc(input,flag)==3)//é€‰æ‹©æ’å…¥åŠŸèƒ½
 	{
-		cout<<"Ñ¡Ôñ²åÈë¹¦ÄÜ"<<endl;
+		cout<<"é€‰æ‹©æ’å…¥åŠŸèƒ½"<<endl;
 		for(i=12;input[i]!='(';i++)
 	    {Name[i-12]=input[i];}
 	    Name[i-12]='\0';
-		record=i;//×óÀ¨ºÅµÄÎ»ÖÃ
+		record=i;//å·¦æ‹¬å·çš„ä½ç½®
 	    if(strcmp(Name,name)!=0)
-	    {cout<<"±íÃû²»ÕıÈ·!"<<endl;
+	    {cout<<"è¡¨åä¸æ­£ç¡®!"<<endl;
 	    return 0;
 	    }
         num=0;
 		Record=-1;
-	    for(i=0;input[i]!=')';i++)//Òª²åÈëµÄÁĞÊı-1
+	    for(i=0;input[i]!=')';i++)//è¦æ’å…¥çš„åˆ—æ•°-1
 	    {if(input[i]==',')
 	    {num++;}
 	    }
 	    k=num;
-		if(k==0)//Ö»²åÈëÒ»ÁĞ
+		if(k==0)//åªæ’å…¥ä¸€åˆ—
 		{for(i=record+1;input[i]!=')';i++)
 	    {findattri[i-record-1]=input[i];}
 	    findattri[i-record-1]='\0';
         for(i=0;input[i]!=')';i++)
 		{}
-		record=i;//µÚÒ»¸öÓÒÀ¨ºÅµÄÎ»ÖÃ
+		record=i;//ç¬¬ä¸€ä¸ªå³æ‹¬å·çš„ä½ç½®
 		for(i=record+1;input[i]!='(';i++)
 		{}
-		record=i;//µÚ¶ş¸ö×óÀ¨ºÅµÄÎ»ÖÃ
+		record=i;//ç¬¬äºŒä¸ªå·¦æ‹¬å·çš„ä½ç½®
 		for(i=record+1;input[i]!=')';i++)
 		{findvalue[i-record-1]=input[i];}
 		findvalue[i-record-1]='\0';
@@ -599,7 +597,7 @@ int main()
 	    {Record=j;}
 	    }
 	    if(Record==-1)
-	    {cout<<"²éÑ¯µÄÁĞ²»´æÔÚ!"<<endl;
+	    {cout<<"æŸ¥è¯¢çš„åˆ—ä¸å­˜åœ¨!"<<endl;
 	    return 0;}
 		insertone(p,Record,findvalue);
 		Save("TextFile.txt",p,column,attribute);
@@ -613,20 +611,20 @@ int main()
 		showall(p,column);
 		drawtable(column);
 	    }
-		else//²åÈë¶àÁĞ
+		else//æ’å…¥å¤šåˆ—
 		{l=0;
 		innum=new int[num+1];
 	    while(k>0)
 	    {for(i=record+1;input[i]!=',';i++)
 	    {findattri[i-record-1]=input[i];}
 	    findattri[i-record-1]='\0';
-	    record=i;//¶ººÅµÄÎ»ÖÃ
+	    record=i;//é€—å·çš„ä½ç½®
 	    for(j=0;j<column+1;j++)
 	    {if(strcmp(findattri,attribute[j])==0)
 	    {Record=j;}
 	    }
 	    if(Record==-1)
-	    {cout<<"²éÑ¯µÄÁĞ²»´æÔÚ!"<<endl;
+	    {cout<<"æŸ¥è¯¢çš„åˆ—ä¸å­˜åœ¨!"<<endl;
 	    return 0;
 	    }
 	    innum[l]=Record;
@@ -634,7 +632,7 @@ int main()
 	    k--;
 	    Record=-1;
 		}
-	    for(i=record+1;input[i]!=')';i++)//Ê¶±ğÓï¾äÖĞ×îºóÒ»ÁĞ
+	    for(i=record+1;input[i]!=')';i++)//è¯†åˆ«è¯­å¥ä¸­æœ€åä¸€åˆ—
 		{Attribute[i-record-1]=input[i];}
 	    Attribute[i-record-1]='\0';
 	    for(j=0;j<column+1;j++)
@@ -642,7 +640,7 @@ int main()
 		{Record=j;}
 		}
 	    if(Record==-1)
-		{cout<<"²éÑ¯µÄÁĞ²»´æÔÚ!"<<endl;
+		{cout<<"æŸ¥è¯¢çš„åˆ—ä¸å­˜åœ¨!"<<endl;
 	    return 0;}
 	    innum[l]=Record;
 	    k=num;
@@ -651,20 +649,20 @@ int main()
 		{invalue[i]=new char[10];}
         for(i=0;input[i]!=')';i++)
 		{}
-		record=i;//µÚÒ»¸öÓÒÀ¨ºÅµÄÎ»ÖÃ
+		record=i;//ç¬¬ä¸€ä¸ªå³æ‹¬å·çš„ä½ç½®
 		for(i=record+1;input[i]!='(';i++)
 		{}
-		record=i;//µÚ¶ş¸ö×óÀ¨ºÅµÄÎ»ÖÃ
+		record=i;//ç¬¬äºŒä¸ªå·¦æ‹¬å·çš„ä½ç½®
 		l=0;
 		while(k>0)
 	    {for(i=record+1;input[i]!=',';i++)
 	    {invalue[l][i-record-1]=input[i];}
 	    invalue[l][i-record-1]='\0';
-	    record=i;//¶ººÅµÄÎ»ÖÃ
+	    record=i;//é€—å·çš„ä½ç½®
 	    l++;
 	    k--;
 		}
-		for(i=record+1;input[i]!=')';i++)//Ê¶±ğÓï¾äÖĞ×îºóÒ»ÁĞ
+		for(i=record+1;input[i]!=')';i++)//è¯†åˆ«è¯­å¥ä¸­æœ€åä¸€åˆ—
 		{invalue[l][i-record-1]=input[i];}
 		invalue[l][i-record-1]='\0';
         insertall(p,innum,invalue,num);
@@ -680,26 +678,26 @@ int main()
 		drawtable(column);
 		}
 	}
-	if(selfunc(input,flag)==4)//Ñ¡ÔñÉ¾³ı¹¦ÄÜ
-	{cout<<"Ñ¡ÔñÉ¾³ı¹¦ÄÜ£¡"<<endl;
+	if(selfunc(input,flag)==4)//é€‰æ‹©åˆ é™¤åŠŸèƒ½
+	{cout<<"é€‰æ‹©åˆ é™¤åŠŸèƒ½ï¼"<<endl;
 	for(i=12;input[i]!=' ';i++)
 	{Name[i-12]=input[i];}
 	Name[i-12]='\0';
 	if(strcmp(Name,name)!=0)
-	{cout<<"±íÃû²»ÕıÈ·£¡"<<endl;
+	{cout<<"è¡¨åä¸æ­£ç¡®ï¼"<<endl;
 	return 0;
 	}
 	Record=-1;
 		for(i=0;input[i]!=';';i++)
 		{}
-		j=i;//·ÖºÅÎ»ÖÃ
+		j=i;//åˆ†å·ä½ç½®
 		for(i=j;input[i]!=' ';i--)
 		{}
-		j=i;//¿Õ¸ñÎ»ÖÃ
+		j=i;//ç©ºæ ¼ä½ç½®
 		for(i=j+1;input[i]!='=';i++)
 		{findattri[i-j-1]=input[i];}
 		findattri[i-j-1]='\0';
-		j=i;//µÈºÅÎ»ÖÃ
+		j=i;//ç­‰å·ä½ç½®
 		for(i=j+1;input[i]!=';';i++)
 		{findvalue[i-j-1]=input[i];}
 		findvalue[i-j-1]='\0';
@@ -708,7 +706,7 @@ int main()
 		{Record=j;}
 		}
 		if(Record==-1)
-		{cout<<"É¾³ıµÄÁĞ²»´æÔÚ!"<<endl;
+		{cout<<"åˆ é™¤çš„åˆ—ä¸å­˜åœ¨!"<<endl;
 	    return 0;}
 		Delete(p,Record,findvalue);
 		Save("TextFile.txt",p,column,attribute);
@@ -722,28 +720,28 @@ for(i=0;i<column+1;i++)
 		showall(p,column);
 		drawtable(column);
 }
-	if(selfunc(input,flag)==5)//Ñ¡ÔñĞŞ¸Ä¹¦ÄÜ
+	if(selfunc(input,flag)==5)//é€‰æ‹©ä¿®æ”¹åŠŸèƒ½
 {
-cout<<"Ñ¡ÔñĞŞ¸Ä¹¦ÄÜ"<<endl;
+cout<<"é€‰æ‹©ä¿®æ”¹åŠŸèƒ½"<<endl;
 for(i=7;input[i]!=' ';i++)
     {Name[i-7]=input[i];}
     Name[i-7]='\0';
-record=i;//¿Õ¸ñµÄÎ»ÖÃ
+record=i;//ç©ºæ ¼çš„ä½ç½®
     if(strcmp(Name,name)!=0)
-    {cout<<"±íÃû²»ÕıÈ·!"<<endl;
+    {cout<<"è¡¨åä¸æ­£ç¡®!"<<endl;
     return 0;
     }
 	Record=-1;
    for(i=0;input[i]!=';';i++)
 		{}
-		j=i;//·ÖºÅÎ»ÖÃ
+		j=i;//åˆ†å·ä½ç½®
 		for(i=j;input[i]!=' ';i--)
 		{}
-		j=i;//¿Õ¸ñÎ»ÖÃ
+		j=i;//ç©ºæ ¼ä½ç½®
 		for(i=j+1;input[i]!='=';i++)
 	{findattri[i-j-1]=input[i];}
 	findattri[i-j-1]='\0';
-	j=i;//µÈºÅÎ»ÖÃ
+	j=i;//ç­‰å·ä½ç½®
 		for(i=j+1;input[i]!=';';i++)
 		{findvalue[i-j-1]=input[i];}
 		findvalue[i-j-1]='\0';	   
@@ -752,7 +750,7 @@ record=i;//¿Õ¸ñµÄÎ»ÖÃ
 	{Record=j;}
 	}
 	if(Record==-1)
-	{cout<<"²éÑ¯µÄÁĞ²»´æÔÚ!"<<endl;
+	{cout<<"æŸ¥è¯¢çš„åˆ—ä¸å­˜åœ¨!"<<endl;
 return 0;
 }
 	Update(p,Record,findvalue);
@@ -767,8 +765,8 @@ drawtable(column);
 		showall(p,column);
 		drawtable(column);
 	   }
-	cout<<"¼ÌĞøÊäÈëSQLÓïÑÔ»ò°´ESCÍË³ö³ÌĞò"<<endl;
-	End=getch();//°´ESC¼ü½áÊø³ÌĞò
+	cout<<"ç»§ç»­è¾“å…¥SQLè¯­è¨€æˆ–æŒ‰ESCé€€å‡ºç¨‹åº"<<endl;
+	End=getch();//æŒ‰ESCé”®ç»“æŸç¨‹åº
     if(End==27)
 	{return 0;}
 	}
