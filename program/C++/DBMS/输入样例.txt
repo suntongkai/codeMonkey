@@ -1,4 +1,4 @@
-CREATE TABLE student(name chat,age int,birth int,subject char);
+CREATE TABLE student(name varchar,age int,birth int,subject varchar);
 
 CREATE INDEX ON student;
 
