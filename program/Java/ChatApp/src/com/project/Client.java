@@ -325,7 +325,7 @@ public class Client {
 	}
 	
 	public static void main(String[] args) {
-		if (args.length < 1) {
+		if (args.length == 1) {
 			new Client(args[0]);
 		} else {
 			System.out.println("java -cp .../ChatAPP.jar com.project.Client ip");
